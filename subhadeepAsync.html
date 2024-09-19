@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async and Promises Example</title>
+</head>
+<body>
+    <h1>Promise Test 123</h1>
+    <button id="trackButton">Track Me!</button>
+
+    <!-- <div>app</div> -->
+    <p id="teachersDisplay"></p>
+    <p id="studentsDisplay"></p>
+    <p id="salesOrder"></p>
+    <p id="purchaseOrder"></p>
+    <p id="profitDisplay"></p>
+  
+    <script>
+        // Asynchronous function to get the 'sales order' value after 3 seconds
+        async function getSo() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(3);
+                }, 3000);
+            });
+        }
+
+        // Asynchronous function to get the 'profit order' value after 5 seconds
+        async function getPo() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(3);
+                }, 3000);
+            });
+        }
+
+        async function calculateProfit() {
+            const so = await getSo(); 
+            const po = await getPo(); 
+            const profit = so - po;
+            // return profit;
+            return new Promise(resolve => {
+               setTimeout(() => {
+                    resolve(1);
+                }, 1000);
+            })
+        }
+
+        function getTeachers() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(2);
+                },2000);
+            });
+        }
+
+        function getStudents() {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(9);
+                }, 2000);
+            });
+        }
+
+        // Event click callback function
+        async function handleClickEvent() {
+
+            // Independent promise calls
+            getTeachers().then(teachers => {
+                document.getElementById("teachersDisplay").innerText = "Teachers: " + teachers;
+            });
+
+            getStudents().then(students => {
+                document.getElementById("studentsDisplay").innerText = "Students: " + students;
+            });
+                        
+             getSo().then(students => {
+                document.getElementById("salesOrder").innerText = "Sales Order: " + students;
+            });
+            
+            getPo().then(students => {
+                document.getElementById("purchaseOrder").innerText = "Purhcase Order: " + students;
+            });
+            
+            const profit = await calculateProfit();
+            document.getElementById("profitDisplay").innerText = "Profit: " + profit;
+            
+          
+           
+        }
+
+        // Add event listener to the button
+        document.getElementById("trackButton").addEventListener("click", handleClickEvent);
+    </script>
+</body>
+</html>
